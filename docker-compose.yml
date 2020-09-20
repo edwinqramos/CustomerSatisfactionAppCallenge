@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+
+  mysql_server:
+    build: ./database/mysql/
+    #image: edwinqramos/appchallenge-db:latest
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=12345678
+      - MYSQL_DATABASE=appchallengebd
+      - MYSQL_USER=usr_api_evaluacion
+      - MYSQL_PASSWORD=12345678
+    volumes: 
+      - ./database/mysql/scripts/:/docker-entrypoint-initdb.d/
+    ports:
+      - "3310:3306"
+    restart: on-failure
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - backend
+
+  apievaluacion:
+    build: ./apiEvaluacion/
+    #image: edwinqramos/appchallenge-api-evaluacion:latest
+    environment: 
+      - host=mysql_server
+      - port=3306
+      - database=appchallengebd
+      - username=usr_api_evaluacion
+      - password=12345678
+      - SPRING_PROFILES_ACTIVE=prd
+    depends_on: 
+      - mysql_server
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    entrypoint: dockerize -wait tcp://mysql_server:3306 -timeout 10m java -jar /workspace/app.jar
+    networks:
+      - backend
+
+volumes:
+  my-data:
+
+networks:
+  backend: 
