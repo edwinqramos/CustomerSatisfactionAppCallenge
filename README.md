@@ -12,32 +12,40 @@ Once the project is up, you can enter the documentation through the link:
 http://localhost:8080/swagger-ui/
 
 
-# Invoke Http Rest Api using commands
+## Invoke Http Rest Api using commands
 
 1. List of evaluations by date range
+```
 curl -X GET "http://localhost:8080/api/v1/evaluaciones/listadoRangoFechas/19-09-2020/19-09-2020" -H "accept: application/json"
+```
 
 2. Register a new evaluation
+```
 curl -X POST "http://localhost:8080/api/v1/evaluaciones/registros" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"email\": \"string\", \"nombres\": \"string\", \"calificacion\": 0}"
+```
 
 3. Modify an evaluation
+```
 curl -X PUT "http://localhost:8080/api/v1/evaluaciones/modificaciones" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"idEvaluacion\": 1, \"email\": \"string\", \"nombres\": \"string\", \"calificacion\": 5}"
-
+```
 
 ## Deployment 
 
 _The project is deployed using docker and docker-compose, run the following commands from the root of the project_
+```
 * cd /CustomerSatisfactionAppCallenge
 * cd apiEvaluacion
 * mvn clean install
 * cd ../
 * docker-compose up -d
+```
 
-The application will be exposed through port 8080, you can view it from the following link http://localhost:8080/
-The collection created in Postman to test the Api Rest are available from the following link https://www.getpostman.com/collections/ee2ec0456105e589b64e
+- The application will be exposed through port 8080, you can view it from the following link http://localhost:8080/
+
+- The collection created in Postman to test the Api Rest are available from the following link https://www.getpostman.com/collections/ee2ec0456105e589b64e
 
 
-## Construido con 
+## Built with
 
 _The project is developed in Java using Spring Boot, Mysql database and deployment with docker._
 
