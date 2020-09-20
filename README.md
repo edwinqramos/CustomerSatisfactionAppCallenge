@@ -5,6 +5,22 @@ _Restfull project developed in Java with Spring Boot, used to list, register and
 * Unit and integration testing using maven
 * Deployment using docker and docker-compose
 
+## Unit and Integration Tests in a local environment
+_To run the tests in your local environment you should follow the following steps:_
+1. Run the creation script on your database server:
+```
+/CustomerSatisfactionAppCallenge/database/scripts/01.Script_Creacion.sql
+```
+2. Configure the database connection in the file:
+```
+ /CustomerSatisfactionAppCallenge/apiEvaluacion/src/test/resources/application.yml
+ ```
+3. Run the following commands:
+```
+cd /apiEvaluacion
+mvn test
+```
+
 ## API documentation
 
 _The documentation is generated from the application itself using "SpringFox"._
@@ -28,6 +44,7 @@ curl -X POST "http://localhost:8080/api/v1/evaluaciones/registros" -H "accept: a
 ```
 curl -X PUT "http://localhost:8080/api/v1/evaluaciones/modificaciones" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"idEvaluacion\": 1, \"email\": \"string\", \"nombres\": \"string\", \"calificacion\": 5}"
 ```
+
 
 ## Deployment Docker
 
