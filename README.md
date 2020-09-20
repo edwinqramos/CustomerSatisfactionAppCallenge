@@ -33,11 +33,11 @@ curl -X PUT "http://localhost:8080/api/v1/evaluaciones/modificaciones" -H "accep
 
 _The project is deployed using docker and docker-compose, run the following commands from the root of the project_
 ```
-* cd /CustomerSatisfactionAppCallenge
-* cd apiEvaluacion
-* mvn clean install
-* cd ../
-* docker-compose up -d
+cd /CustomerSatisfactionAppCallenge
+cd apiEvaluacion
+mvn clean install
+cd ../
+docker-compose up -d
 ```
 
 - The application will be exposed through port 8080, you can view it from the following link http://localhost:8080/
@@ -54,9 +54,10 @@ _The project is developed in Java using Spring Boot, Mysql database and deployme
 * [Maven](https://maven.apache.org/) - Dependency manager
 * [SpringFox 3.0](https://springfox.github.io/springfox/) - Automated JSON API documentation for API's built with Spring
 * [SpringFox-Swagger 3.0](https://github.com/springfox/springfox-demos/tree/master/spring-java-swagger) - An java configured spring web mvc app with Swagger2 and Swagger UI
+* [Dockerize](https://github.com/jwilder/dockerize/) - Utility to simplify running applications in docker containers
 
 
-# Mejoras por aplicar:
+## Mejoras por aplicar:
 _En el transcurso de desarrollo del proyecto se detectaron algunas mejoras que quedaron pendientes de aplicar para un siguiente sprint_
 * Listado con paginación
 * Utilizar programación reactiva con Spring WebFlux o RxJava para optimizar las peticiones
