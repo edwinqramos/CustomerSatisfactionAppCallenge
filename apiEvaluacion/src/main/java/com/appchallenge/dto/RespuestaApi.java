@@ -8,6 +8,10 @@ public class RespuestaApi implements Serializable {
 
 	private String status;
 	private Object body;
+	
+	public RespuestaApi() {
+		super();
+	}
 
 	public RespuestaApi(String status, Object body) {
 		super();

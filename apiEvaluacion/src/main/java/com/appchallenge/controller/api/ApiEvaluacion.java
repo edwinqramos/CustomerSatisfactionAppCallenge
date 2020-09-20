@@ -1,6 +1,8 @@
 package com.appchallenge.controller.api;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.appchallenge.common.util.Constantes;
 import com.appchallenge.common.util.DateUtil;
 import com.appchallenge.dto.RespuestaApi;
 import com.appchallenge.model.Evaluacion;
@@ -48,16 +51,20 @@ public class ApiEvaluacion {
 			Date dateInicio = DateUtil.stringToDate(fechaInicio, DateUtil.FORMATO_DIA_DDMMYYYY);
 			Date dateFin = DateUtil.stringToDate(fechaFin, DateUtil.FORMATO_DIA_DDMMYYYY);
 			
-			//Cambiar por GregorianCalendar
-			dateInicio.setHours(0);
-			dateInicio.setMinutes(0);
-			dateInicio.setSeconds(0);
+			Calendar calInicio = new GregorianCalendar(); 
+			calInicio.setTime(dateInicio);
+			calInicio.set(Calendar.HOUR_OF_DAY, 0);
+			calInicio.set(Calendar.MINUTE, 0);
+			calInicio.set(Calendar.SECOND, 0);
 			
-			dateFin.setHours(23);
-			dateFin.setMinutes(59);
-			dateFin.setSeconds(59);
+			Calendar calFin = new GregorianCalendar(); 
+			calFin.setTime(dateFin);
+			calFin.set(Calendar.HOUR_OF_DAY, 23);
+			calFin.set(Calendar.MINUTE, 59);
+			calFin.set(Calendar.SECOND, 59);
+			
 
-			List<Evaluacion> lista = evaluacionService.listarRangoFechas(dateInicio, dateFin);
+			List<Evaluacion> lista = evaluacionService.listarRangoFechas(calInicio.getTime(), calFin.getTime());
 
 			return new ResponseEntity<List<Evaluacion>>(lista, HttpStatus.OK);
 		} catch (Exception e) {
@@ -77,10 +84,10 @@ public class ApiEvaluacion {
 			if (evaluacionInsert == null)
 				throw new Exception("No se pudo registrar.");
 
-			return new ResponseEntity<RespuestaApi>(new RespuestaApi("OK", evaluacionInsert), HttpStatus.OK);
+			return new ResponseEntity<RespuestaApi>(new RespuestaApi(Constantes.CODIGO_RESPUESTA_GENERAL_EXITO, evaluacionInsert), HttpStatus.OK);
 		} catch (Exception e) {
 			LOGGER.error("Error: ", e);
-			return new ResponseEntity<>(new RespuestaApi("ERROR", null), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new RespuestaApi(Constantes.CODIGO_RESPUESTA_GENERAL_ERROR, null), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -103,10 +110,10 @@ public class ApiEvaluacion {
 			if (evaluacionUpdate == null)
 				throw new Exception("No se pudo actualizar.");
 			
-			return new ResponseEntity<RespuestaApi>(new RespuestaApi("OK", ""), HttpStatus.OK);
+			return new ResponseEntity<RespuestaApi>(new RespuestaApi(Constantes.CODIGO_RESPUESTA_GENERAL_EXITO, evaluacionUpdate), HttpStatus.OK);
 		} catch (Exception e) {
 			LOGGER.error("Error: ", e);
-			return new ResponseEntity<>(new RespuestaApi("ERROR", null), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new RespuestaApi(Constantes.CODIGO_RESPUESTA_GENERAL_ERROR, null), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
